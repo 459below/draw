@@ -424,6 +424,16 @@ var send_key_move_timer;
 var key_move_timer_is_active = false;
 
 function onKeyDown(event) {
+if (event.key == "1") {
+      document.getElementById('drawTool').click();
+    } else if (event.key == "2") {
+      document.getElementById('pencilTool').click();
+    } else if (event.key == "3") {
+      document.getElementById('selectTool').click();
+    } else if (event.key == "4") {
+      document.getElementById('colorToggle').click();
+    }
+
   if (activeTool == "select") {
     var point = null;
 
@@ -472,7 +482,7 @@ function onKeyDown(event) {
 
 
 function onKeyUp(event) {
-  if (event.key == "delete") {
+  if (event.key == "delete" || event.key == "r") {
     // Delete selected items
     var items = paper.project.selectedItems;
     if (items) {

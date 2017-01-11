@@ -768,15 +768,10 @@ function onMouseDown(event) {
       mouseTimer = 0;
       clearInterval(mouseHeld);
       mouseHeld = undefined;
-      var picker = $('#mycolorpicker');
-      picker.toggle(); // show the color picker
-      if (picker.is(':visible')) {
-        // Get position of cursor
-        var point = getEventPoint(event.event, 'client');
-        var position = $('#myCanvas').position();
-        // Takeaway offset of canvas
-        point -= new Point(position.left, position.top);
-        positionPickerInCanvas(point);
+      // Delete selected items
+      var items = paper.project.selectedItems;
+      if (items) {
+        deleteItems(items); 
       }
     }
   }, 100);

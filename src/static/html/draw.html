@@ -129,8 +129,14 @@
                 </li>
                <!-- share & embed -->
                 <li data-key="embed">
-                    <a id="embedlink" class="grouped-right" data-l10n-id="draw.toolbar.embed.title" title="Show Embed Drawing URL">
+                    <a id="embedlink" class="grouped-middle" data-l10n-id="draw.toolbar.embed.title" title="Show Embed Drawing URL">
                         <span class="buttonicon buttonicon-embed"></span>
+                    </a>
+                </li>
+               <!-- show user manual -->
+                <li data-key="manual">
+                    <a id="manuallink" class="grouped-right" data-l10n-id="draw.toolbar.manual.title" title="Show User Manual">
+                        <span class="grouped-right buttonicon buttonicon-manual" style="background-color:transparent;background-image:none;margin:0;color:#000;height:14px;line-height:18px;font-size: 16px">?</span>
                     </a>
                 </li>
 
@@ -183,6 +189,39 @@
                 <div><a id="exportSVG" target="_blank" class="exportlink">Export SVG</a></div>
                 <div><a id="exportPNG" target="_blank" class="exportlink">Export PNG</a></div>
             </div>
+        </div>
+        <div id="manual" class="popup" style="width: 80%;">
+            <h1 data-l10n-id="draw.manual.title">Manual</h1>
+            <br>
+            <h2 data-l10n-id="draw.manual.overview">Overview</h2>
+            <div>This is etherdraw. It allows you to collaboratively draw, sketch and paint in real-time. Everyone you share this link with, will be able to view and participate in the drawing. The available drawing tools are: Brush, Pencil, Select, Text and Upload.</div>
+            <br>
+            <h2 data-l10n-id="draw.manual.tools.brush">Brush</h2>
+            <div>The brush allows you to draw thick lines. The faster you move the cursor while painting, the thicker the line will become. Every drawing action will become a seperately moveable or removeable object. This will be done by the select tool.</div>
+            <br>
+            <h2 data-l10n-id="draw.manual.tools.pencil">Pencil</h2>
+            <div>The pencil allows you to draw fine lines, regardless of the moving speed of the cursor. Every drawing action will become a seperately moveable or removeable object. This will be done by the select tool.</div>
+            <br>
+            <h2 data-l10n-id="draw.manual.tools.select">Select</h2>
+            <div>The select tool allows you to move and remove the lines or text boxes made prior. To move an item you will need to select it by clicking on it. The selected item can be moved by simply dragging and dropping it around the canvas or by using the arrow keys on the keyboard. To delete an item you will press the "Delete" or the "R" key. Additionally you can hold down the mouse after selecting the item and hold it for several seconds until the item is deleted.</div>
+            <br>
+            <h2 data-l10n-id="draw.manual.tools.textbox">Text box</h2>
+            <div>The text box tool allows you to create editable text boxes on the canvas. In order to edit a text box, you will need to select the "text" tool and select the text box in question. To move it around you will do the same with the select tool.</div>
+            <br>
+            <h2 data-l10n-id="draw.manual.tools.colorpicker">Color picker</h2>
+            <div>The color picker is used to set the current color of brush and pencil. Additionally it is able to set the opacity level of current color.</div>
+            <br>
+            <h2 data-l10n-id="draw.manual.zoomandpan">Zoom and pan</h2>
+            <div>Etherdraw allows you to zoom and pan around an infinite canvas. Zooming in or out is done via the mouse wheel or, if you're using a touch screen interface, you will need to "pinch to zoom". To pan you will need to press the mouse wheel or, if you're using a touch screen interface, you will need to use 2 fingers to pan. The button "0.0" will reset the position of the canvas back to the origin. The button "1:1" respectively resets the zoom factor. The button next to it, labeled "Zoom to fit contents" will set zoom and pan so that every element is visible. You will see the current canvas position and zoom factor on the lower right corner.</div>
+            <br>
+            <h2 data-l10n-id="draw.manual.upload">Upload images</h2>
+            <div>Etherdraw allows you to upload JPG or PNG images into the canvas. These images can be moved and removed like lines.</div>
+            <br>
+            <h2 data-l10n-id="draw.manual.clear">Clearing the drawing</h2>
+            <div>The "Clear Drawing" button will remove all elements on the drawing. This cannot be reversed.</div>
+            <br>
+            <h2 data-l10n-id="draw.manual.clear">Share the Drawing</h2>
+            <div>The "Embed Drawing" button shows the current URL to be share or embed it in a webpage.</div> 
         </div>
 
         <div id="lostConnection" class="hidden">

@@ -325,7 +325,8 @@ input[type=checkbox] {
 #importexport,
 #embed,
 #connectivity,
-#users {
+#users,
+#manual {
   position: absolute;
   top: 36px;
   right: 20px;

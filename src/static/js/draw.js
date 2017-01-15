@@ -1228,6 +1228,9 @@ $('#exportSVG').on('click', function() {
 $('#exportPNG').on('click', function() {
   exportPNG();
 });
+$('#manuallink').on('click', function() {
+  $('#manual').fadeToggle();
+});
 
 $('#pencilTool').on('click', function() {
   $('#editbar > ul > li > a').css({

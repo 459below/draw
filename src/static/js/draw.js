@@ -672,14 +672,6 @@ $('#colorToggle').on('click', function() {
   }
 });
 
-$('#clearImage').click(function() {
-  var p = confirm("Are you sure you want to clear the drawing for everyone?");
-  if (p) {
-    clearCanvas();
-    socket.emit('canvas:clear', room);
-  }
-});
-
 $('#toggleBackground').click(function() {
   $('#myCanvas').toggleClass('whiteBG');
 });
@@ -1209,8 +1201,8 @@ $color.on('click', function() {
 $('#pickerSwatch').on('click', function(event) {
   $('#mycolorpicker').toggle();
 });
-$('#settingslink').on('click', function() {
-  $('#settings').fadeToggle();
+$('#clear_drawinglink').on('click', function() {
+  $('#clear_drawing').fadeToggle();
 });
 $('#embedlink').on('click', function() {
   $('#embed').fadeToggle();
@@ -1221,6 +1213,7 @@ $('#importExport').on('click', function() {
 $('#clearCanvas').on('click', function() {
   clearCanvas();
   socket.emit('canvas:clear', room);
+  $('#clear_drawing').fadeToggle();                                                                                                         $('#activeColorSwatch').css('background-color', $(this).css('background-color'));
 });
 $('#exportSVG').on('click', function() {
   exportSVG();

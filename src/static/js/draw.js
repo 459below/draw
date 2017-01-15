@@ -1218,9 +1218,6 @@ $('#embedlink').on('click', function() {
 $('#importExport').on('click', function() {
   $('#importexport').fadeToggle();
 });
-$('#usericon').on('click', function() {
-  $('#mycolorpicker').fadeToggle();
-});
 $('#clearCanvas').on('click', function() {
   clearCanvas();
   socket.emit('canvas:clear', room);

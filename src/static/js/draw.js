@@ -1037,7 +1037,17 @@ if (event.key == "1") {
     } else if (event.key == "3") {
       document.getElementById('selectTool').click();
     } else if (event.key == "4") {
+      document.getElementById('textTool').click();
+    } else if (event.key == "5") {
       document.getElementById('colorToggle').click();
+    } else if (event.key == "6") {
+      document.getElementById('zeroTool').click();
+    } else if (event.key == "7") {
+      document.getElementById('scaleTool').click();
+    } else if (event.key == "8") {
+      document.getElementById('fitTool').click();
+    } else if (event.key == "9") {
+      document.getElementById('uploadImage').click();
     }
 
   if (activeTool == "select") {

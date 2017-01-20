@@ -724,7 +724,7 @@ function onMouseDown(event) {
     fingers = 0;
   }
 
-  // Pan - Middle click, click+shift or two finger touch for canvas moving
+  // Pan - Middle click, click+ctrl or two finger touch for canvas moving
   // Will also handle scaling using pinch gestures
   if (event.event.button == 1 
       || (event.event.button == 0 && event.event.ctrlKey)

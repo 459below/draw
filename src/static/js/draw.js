@@ -752,23 +752,6 @@ function onMouseDown(event) {
     overItem = false;
   }
 
-  mouseTimer = 0;
-  if (!mouseHeld) {
-    mouseHeld = setInterval(function() { // is the mouse being held and not dragged?
-    mouseTimer++;
-    if (mouseTimer > 3) {
-      mouseTimer = 0;
-      clearInterval(mouseHeld);
-      mouseHeld = undefined;
-      // Delete selected items
-      var items = paper.project.selectedItems;
-      if (items) {
-        deleteItems(items); 
-      }
-    }
-  }, 100);
-  }
-
   if (activeTool == "draw" || activeTool == "pencil") {
     var point = event.point;
     path = new Path();

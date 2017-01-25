@@ -793,15 +793,9 @@ function onMouseDown(event) {
   } else if (activeTool == "select") {
     // Select item
     $("#myCanvas").css("cursor", "pointer");
-    if (event.item) {
-      // If holding shift key down, don't clear selection - allows multiple selections
-      if (!event.event.shiftKey) {
-        paper.project.activeLayer.selected = false;
-      }
-      event.item.selected = true;
-      view.draw();
-    } else {
+    if ( ! event.item) {
       paper.project.activeLayer.selected = false;
+      selection_rectangle_startpoint = event.point;
     }
   }
 }
@@ -809,6 +803,7 @@ function onMouseDown(event) {
 var item_move_delta;
 var send_item_move_timer;
 var item_move_timer_is_active = false;
+var selection_rectangle_startpoint;
 
 function onMouseDrag(event) {
   event.preventDefault();
@@ -1004,22 +999,36 @@ function onMouseUp(event) {
       }
     }
   } else if (activeTool == "select") {
-    // End movement timer
-    clearInterval(send_item_move_timer);
-    if (item_move_delta) {
-      // Send any remaining movement info
-      var itemNames = new Array();
-      for (x in paper.project.selectedItems) {
-        var item = paper.project.selectedItems[x];
-        itemNames.push(item._name);
+    if(typeof paper.project.selectedItems[0] != "undefined") {
+      // End movement timer
+      clearInterval(send_item_move_timer);
+      if (item_move_delta) {
+        // Send any remaining movement info
+        var itemNames = new Array();
+        for (x in paper.project.selectedItems) {
+          var item = paper.project.selectedItems[x];
+          itemNames.push(item._name);
+        }
+        socket.emit('item:move:end', room, uid, itemNames, item_move_delta);
+      } else {
+        // delta is null, so send 0 change
+        socket.emit('item:move:end', room, uid, itemNames, new Point(0, 0));
       }
-      socket.emit('item:move:end', room, uid, itemNames, item_move_delta);
+      item_move_delta = null;
+      item_move_timer_is_active = false;
     } else {
-      // delta is null, so send 0 change
-      socket.emit('item:move:end', room, uid, itemNames, new Point(0, 0));
+      var selection_rectangle_endpoint = event.point;
+      var selection_rectangle = new Rectangle(selection_rectangle_startpoint, selection_rectangle_endpoint);
+      var group = paper.project.activeLayer;
+      if ((group instanceof Group)) {
+        for (i = 0; i < group.children.length; i++) {
+          var elements_bounding_box = new Rectangle(group.children[i].getBounds());
+          if(selection_rectangle.intersects(elements_bounding_box)) {
+            group.children[i].selected = true;
+          }
+        }
+      }
     }
-    item_move_delta = null;
-    item_move_timer_is_active = false;
   }
 
   textboxClosed = false;

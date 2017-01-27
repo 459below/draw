@@ -47,107 +47,103 @@
             <div id="overlay">
                 <div id="overlay-inner"></div>
             </div>
-            <ul class="menu_left">
+            <ul class="menu_left" style="font-size: 1.5em">
                 <!-- paint brush -->
                 <li class="acl-write" id="drawTool" data-key="draw">
                     <a class="grouped-left" data-l10n-id="draw.toolbar.draw.title" title="Paint Brush">
-                      <span class="buttonicon buttonicon-draw"></span>
+                      <span>🖌</span>
                     </a>
                 </li>
 
                 <!-- pencil brush -->
                 <li class="acl-write" id="pencilTool" data-key="pencil">
                     <a class="grouped-middle" data-l10n-id="draw.toolbar.pencil.title" title="Pencil Tool">
-                      <span class="buttonicon buttonicon-pencil"></span>
+                      <span>✏️</span>
                     </a>
                 </li>
 
                 <!-- select tool -->
                 <li class="acl-write" id="selectTool" data-key="select">
                     <a class="grouped-middle" data-l10n-id="draw.toolbar.select.title" title="Selection Tool">
-                      <span class="buttonicon buttonicon-select"></span>
+                      <span>✂️</span>
                     </a>
                 </li>
 
                 <!-- pan tool -->
                 <li class="acl-write" id="panTool" data-key="pan">
                     <a class="grouped-middle" data-l10n-id="draw.toolbar.pan.title" title="Pan Tool">
-                      <span class="grouped-middle buttonicon buttonicon-pan" style="background-color:transparent;background-image:none;margin:0;color:#000;height:14px;line-height:18px;font-size: 16px">↕︎</span>
+                      <span>🖐</span>
                     </a>
                 </li>
     
                 <!-- insert textbox -->
                 <li class="acl-write" id="textTool" data-key="text">
                     <a class="grouped-middle" data-l10n-id="draw.toolbar.text.title" title="Insert textbox">
-                      <span class="buttonicon buttonicon-text"></span>
+                      <span>✍️</span>
                     </a>
                 </li>
 
                 <!-- color picker toggle -->
                 <li class="acl-write" id="colorToggle" data-key="color">
                   <a class="grouped-middle" data-l10n-id="draw.toolbar.colorToggle.title" title="Show Color Picker">
-                    <span class="buttonicon buttonicon-color" style="opacity:0.5">
-                      <div style="display:inline-block;width:5px; height:16px; background-color:red;margin:0;padding:0;float:left"></div>
-                      <div style="display:inline-block;width:5px; height:16px; background-color:blue;margin:0;padding:0;float:left"></div>
-                      <div style="display:inline-block;width:5px; height:16px; background-color:green;margin:0;padding:0;float:left"></div>
-                    </span>
+                    <span>🌈</span>
                   </a>
                 </li>
     
                 <!-- goto to start of canvas -->
                 <li class="acl-write" id="zeroTool" data-key="zero">
                     <a class="grouped-middle" data-l10n-id="draw.toolbar.zero.title" title="Reset Canvas Panning to 0,0">
-                      <span class="buttonicon buttonicon-zero"></span>
+                      <span>🔝</span>
                     </a>
                 </li>
     
                 <!-- reset scaling -->
                 <li class="acl-write" id="scaleTool" data-key="scale">
                     <a class="grouped-middle" data-l10n-id="draw.toolbar.scale.title" title="Reset Canvas Scaling to 1:1">
-                      <span class="buttonicon buttonicon-scale"></span>
+                      <span>🔎</span>
                     </a>
                 </li>
     
                 <!-- zoom to fit -->
                 <li class="acl-write" id="fitTool" data-key="fit">
                     <a class="grouped-middle" data-l10n-id="draw.toolbar.fit.title" title="Zoom to fit contents">
-                      <span class="buttonicon buttonicon-fit"></span>
+                      <span>🗺</span>
                     </a>
                 </li>
 
                 <!-- upload -->
                 <li class="acl-write" id="uploadImage" data-key="upload">
                     <a class="grouped-right" data-l10n-id="draw.toolbar.upload.title" title="Upload an Image">
-                      <span class="buttonicon buttonicon-upload"></span>
+                      <span>🖼</span>
                     </a>
                 </li>
             </ul>
-            <ul class="menu_right">
+            <ul class="menu_right" style="font-size: 1.5em">
                 <!-- clear drawing -->
                 <li data-key="clear_drawing">
                     <a id="clear_drawinglink" class="grouped-left" data-l10n-id="draw.toolbar.clear_drawing.title" title="Clear Drawing">
-                        <span class="grouped-left buttonicon buttonicon-settings" style="background-color:transparent;background-image:none;border:dotted 1px black;margin:0;color:#000;height:14px;line-height:14px">X</span>
+                        <span>🗑</span>
                     </a>
                 </li>
 
                 <!-- import export -->
                 <li data-key="import_export">
                     <a id="importExport" class="grouped-middle" data-l10n-id="draw.toolbar.import_export.title" title="Export Drawing">
-                        <span class="buttonicon buttonicon-import_export"></span>
+                        <span>💾</span>
                     </a>
                 </li>
 
                <!-- share & embed -->
                 <li data-key="embed">
                     <a id="embedlink" class="grouped-middle" data-l10n-id="draw.toolbar.embed.title" title="Show Embed Drawing URL">
-                        <span class="buttonicon buttonicon-embed"></span>
+                        <span>🌍</span>
                     </a>
                 </li>
 
                <!-- show user manual -->
                 <li data-key="manual">
                     <a id="manuallink" class="grouped-right" data-l10n-id="draw.toolbar.manual.title" title="Show User Manual">
-                        <span class="grouped-right buttonicon buttonicon-manual" style="background-color:transparent;background-image:none;margin:0;color:#000;height:14px;line-height:18px;font-size: 16px">?</span>
+                        <span>❓</span>
                     </a>
                 </li>
 
@@ -155,7 +151,7 @@
                 <li class="separator"></li>
                 <li id="usericon" data-key="showusers">
                     <a data-l10n-id="draw.toolbar.showusers.title" title="Current Users">
-                        <span class="buttonicon buttonicon-showusers"></span>
+                        <span>👥</span>
                         <span id="online_count">1</span>
                     </a>
                 </li>

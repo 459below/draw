@@ -1008,6 +1008,7 @@ function onMouseUp(event) {
           var elements_bounding_box = new Rectangle(group.children[i].getBounds());
           if(selection_rectangle.intersects(elements_bounding_box)) {
             group.children[i].selected = true;
+            selection_rectangle_startpoint=undefined;
           }
         }
       }

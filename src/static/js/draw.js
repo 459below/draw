@@ -724,10 +724,10 @@ function onMouseDown(event) {
     fingers = 0;
   }
 
-  // Pan - Middle click, click+ctrl or two finger touch for canvas moving
+  // Pan - Middle click, pan tool or two finger touch for canvas moving
   // Will also handle scaling using pinch gestures
   if (event.event.button == 1 
-      || (event.event.button == 0 && event.event.ctrlKey)
+      || (event.event.button == 0 && activeTool == "pan")
       || (event.event.touches && event.event.touches.length == 2)) {
     previousPoint = getEventPoint(event.event, 'client');
     var canvas = $('#myCanvas');
@@ -804,11 +804,11 @@ function onMouseDrag(event) {
     $('#mycolorpicker').toggle();
   }
 
-  /* Pan / Pinch zoom - Middle click, click+shift or two finger touch for
+  /* Pan / Pinch zoom - Middle click, pan tool or two finger touch for
    * canvas moving and zooming if fingers are involved
    */
   if (event.event.button == 1 
-      || (event.event.button == 0 && event.event.ctrlKey)
+      || (event.event.button == 0 && activeTool == "pan")
       || (event.event.touches && event.event.touches.length == 2)) {
     // Calculate our own delta as the event delta is relative to the canvas
     var point = getEventPoint(event.event, 'client');
@@ -883,7 +883,7 @@ function onMouseDrag(event) {
           socket.emit('draw:progress', room, uid, JSON.stringify(path_to_send));
           path_to_send.path = new Array();
 
-        }, 100);
+        }, 1000);
 
       }
 
@@ -935,9 +935,9 @@ function onMouseUp(event) {
     return;
   }
 
-  // Pan - Middle click, click+shift or two finger touch for canvas moving
+  // Pan - Middle click, pan tool or two finger touch for canvas moving
   if (event.event.button == 1 
-      || (event.event.button == 0 && event.event.ctrlKey)
+      || (event.event.button == 0 && activeTool == "pan")
       || (event.event.touches && fingers == 2)) {
     $('#myCanvas').css('cursor', 'pointer');
     return;
@@ -1030,16 +1030,18 @@ if (event.key == "1") {
     } else if (event.key == "3") {
       document.getElementById('selectTool').click();
     } else if (event.key == "4") {
-      document.getElementById('textTool').click();
+      document.getElementById('panTool').click();
     } else if (event.key == "5") {
-      document.getElementById('colorToggle').click();
+      document.getElementById('textTool').click();
     } else if (event.key == "6") {
-      document.getElementById('zeroTool').click();
+      document.getElementById('colorToggle').click();
     } else if (event.key == "7") {
-      document.getElementById('scaleTool').click();
+      document.getElementById('zeroTool').click();
     } else if (event.key == "8") {
-      document.getElementById('fitTool').click();
+      document.getElementById('scaleTool').click();
     } else if (event.key == "9") {
+      document.getElementById('fitTool').click();
+    } else if (event.key == "0") {
       document.getElementById('uploadImage').click();
     }
 
@@ -1258,7 +1260,17 @@ $('#selectTool').on('click', function() {
     background: "#eee"
   }); // set the selecttool css to show it as active
   activeTool = "select";
-  $('#myCanvas').css('cursor', 'default');
+  $('#myCanvas').css('cursor', 'crosshair');
+});
+$('#panTool').on('click', function() {
+  $('#editbar > ul > li > a').css({
+    background: ""
+  }); // remove the backgrounds from other buttons
+  $('#panTool > a').css({
+    background: "#eee"
+  }); // set the selecttool css to show it as active
+  activeTool = "pan";
+  $('#myCanvas').css('cursor', 'move');
 });
 $('#textTool').on('click', function() {
   $('#editbar > ul > li > a').css({
@@ -1268,7 +1280,7 @@ $('#textTool').on('click', function() {
     background: "#eee"
   }); // set the texttool css to show it as active
   activeTool = "text";
-  $('#myCanvas').css('cursor', 'crosshair');
+  $('#myCanvas').css('cursor', 'text');
 });
 
 $('#zeroTool').on('click', function() {

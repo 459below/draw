@@ -883,7 +883,7 @@ function onMouseDrag(event) {
           socket.emit('draw:progress', room, uid, JSON.stringify(path_to_send));
           path_to_send.path = new Array();
 
-        }, 1000);
+        }, 100);
 
       }
 

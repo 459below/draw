@@ -1023,86 +1023,86 @@ var send_key_move_timer;
 var key_move_timer_is_active = false;
 
 function onKeyDown(event) {
-if (event.key == "1") {
-      document.getElementById('drawTool').click();
-    } else if (event.key == "2") {
-      document.getElementById('pencilTool').click();
-    } else if (event.key == "3") {
-      document.getElementById('selectTool').click();
-    } else if (event.key == "4") {
-      document.getElementById('panTool').click();
-    } else if (event.key == "5") {
-      document.getElementById('textTool').click();
-    } else if (event.key == "6") {
-      document.getElementById('colorToggle').click();
-    } else if (event.key == "7") {
-      document.getElementById('zeroTool').click();
-    } else if (event.key == "8") {
-      document.getElementById('scaleTool').click();
-    } else if (event.key == "9") {
-      document.getElementById('fitTool').click();
-    } else if (event.key == "0") {
-      document.getElementById('uploadImage').click();
-    }
+    if(!textbox){
+        if (event.key == "1") {
+          document.getElementById('drawTool').click();
+        } else if (event.key == "2") {
+          document.getElementById('pencilTool').click();
+        } else if (event.key == "3") {
+          document.getElementById('selectTool').click();
+        } else if (event.key == "4") {
+          document.getElementById('panTool').click();
+        } else if (event.key == "5") {
+          document.getElementById('textTool').click();
+        } else if (event.key == "6") {
+          document.getElementById('colorToggle').click();
+        } else if (event.key == "7") {
+          document.getElementById('zeroTool').click();
+        } else if (event.key == "8") {
+          document.getElementById('scaleTool').click();
+        } else if (event.key == "9") {
+          document.getElementById('fitTool').click();
+        } else if (event.key == "0") {
+          document.getElementById('uploadImage').click();
+        } else if (event.key == "delete" || event.key == "r") {
+          // Delete selected items
+          var items = paper.project.selectedItems;
+          if (items) {
+            deleteItems(items);
+          }
+        }
 
-  if (activeTool == "select") {
-    var point = null;
+      if (activeTool == "select") {
+        var point = null;
 
-    if (event.key == "up") {
-      point = new paper.Point(0, -1);
-    } else if (event.key == "down") {
-      point = new paper.Point(0, 1);
-    } else if (event.key == "left") {
-      point = new paper.Point(-1, 0);
-    } else if (event.key == "right") {
-      point = new paper.Point(1, 0);
-    }
+        if (event.key == "up") {
+          point = new paper.Point(0, -1);
+        } else if (event.key == "down") {
+          point = new paper.Point(0, 1);
+        } else if (event.key == "left") {
+          point = new paper.Point(-1, 0);
+        } else if (event.key == "right") {
+          point = new paper.Point(1, 0);
+        }
 
-    // Move objects 1 pixel with arrow keys
-    if (point) {
-      moveItemsBy1Pixel(point);
-    }
+        // Move objects 1 pixel with arrow keys
+        if (point) {
+          moveItemsBy1Pixel(point);
+        }
 
-    // Store delta
-    if (paper.project.selectedItems && point) {
-      if (!key_move_delta) {
-        key_move_delta = point;
-      } else {
-        key_move_delta += point;
+        // Store delta
+        if (paper.project.selectedItems && point) {
+          if (!key_move_delta) {
+            key_move_delta = point;
+          } else {
+            key_move_delta += point;
+          }
+        }
+
+        // Send move updates every 100 ms as batch updates
+        if (!key_move_timer_is_active && point) {
+          send_key_move_timer = setInterval(function() {
+            if (key_move_delta) {
+              var itemNames = new Array();
+              for (x in paper.project.selectedItems) {
+                var item = paper.project.selectedItems[x];
+                if (item.parent instanceof Layer) {
+                  itemNames.push(item._name);
+                }
+              }
+              socket.emit('item:move:progress', room, uid, itemNames, key_move_delta);
+              key_move_delta = null;
+            }
+          }, 100);
+        }
+        key_move_timer_is_active = true;
       }
     }
-
-    // Send move updates every 100 ms as batch updates
-    if (!key_move_timer_is_active && point) {
-      send_key_move_timer = setInterval(function() {
-        if (key_move_delta) {
-          var itemNames = new Array();
-          for (x in paper.project.selectedItems) {
-            var item = paper.project.selectedItems[x];
-            if (item.parent instanceof Layer) {
-              itemNames.push(item._name);
-            }
-          }
-          socket.emit('item:move:progress', room, uid, itemNames, key_move_delta);
-          key_move_delta = null;
-        }
-      }, 100);
-    }
-    key_move_timer_is_active = true;
-  }
 }
 
 
 
 function onKeyUp(event) {
-  if (event.key == "delete" || event.key == "r") {
-    // Delete selected items
-    var items = paper.project.selectedItems;
-    if (items) {
-      deleteItems(items);
-    }
-  }
-
   if (activeTool == "select") {
     // End arrow key movement timer
     clearInterval(send_key_move_timer);

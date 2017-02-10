@@ -1218,7 +1218,7 @@ $('#importExport').on('click', function() {
 $('#clearCanvas').on('click', function() {
   clearCanvas();
   socket.emit('canvas:clear', room);
-  $('#clear_drawing').fadeToggle();                                                                                                         $('#activeColorSwatch').css('background-color', $(this).css('background-color'));
+  $('#clear_drawing').fadeToggle();
 });
 $('#exportSVG').on('click', function() {
   exportSVG();

@@ -417,7 +417,7 @@ function deleteItems(items) {
 
 
 /// Textbox-specific stuff {{
-var fontSize = 14;
+var fontSize = 20;
 var padding = 5;
 var textbox;
 var textboxClosed;
@@ -474,6 +474,7 @@ function writeEditTextbox() {
       paintTextbox(options);
       // Convert point to array
       options.point = [options.point.x, options.point.y];
+      options.fontSize = 20;
       socket.emit('draw:textbox', room, uid, JSON.stringify(options));
 
       view.draw();
@@ -546,7 +547,7 @@ function editTextbox(item) {
 function paintTextbox(options) {
   options = $.extend({
     padding: 5,
-    fontSize: 12,
+    fontSize: 20,
     fillColor: new Color(1, 0.8),
     color: new Color(0),
     point: new Point(0, 0)

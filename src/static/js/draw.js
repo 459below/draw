@@ -1239,6 +1239,7 @@ $('#pencilTool').on('click', function() {
     background: "#eee"
   }); // set the selecttool css to show it as active
   activeTool = "pencil";
+  tool.minDistance = 1;
   $('#myCanvas').css('cursor', 'pointer');
   paper.project.activeLayer.selected = false;
 });
@@ -1250,6 +1251,7 @@ $('#drawTool').on('click', function() {
     background: "#eee"
   }); // set the selecttool css to show it as active
   activeTool = "draw";
+  tool.minDistance = 10;
   $('#myCanvas').css('cursor', 'pointer');
   paper.project.activeLayer.selected = false;
 });

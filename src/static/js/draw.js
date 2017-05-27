@@ -781,7 +781,17 @@ function onMouseDown(event) {
       paper.project.activeLayer.selected = false;
       selection_rectangle_startpoint = event.point;
     }
-  }
+  } else if (activeTool == "rectangle" || activeTool == "circle" || activeTool == "line") {
+    // The data to be sent to server in JSON
+    // Is used by the other Clients to draw(display) the path
+    path_to_send = {
+      name: uid + ":" + (++paper_object_count),
+      rgba: active_color_json,
+      start: event.point,
+      path: [],
+      tool: activeTool
+    };
+  } 
 }
 
 var item_move_delta;
@@ -1014,6 +1024,28 @@ function onMouseUp(event) {
         }
       }
     }
+  } else if (activeTool == 'rectangle' || activeTool == 'circle') {
+    path = new Path.Rectangle(path_to_send.start, event.point);
+    path.fillColor = active_color_rgb;
+    path.name = path_to_send.name;
+    path.closed = true;
+    
+    if ( activeTool == 'circle') {
+      path.smooth();
+    }
+    // add end point to path_to_send before sending to server
+    path_to_send.end = event.point;
+    // Send draw:end event to the Server with the end point
+    socket.emit('draw:end', room, uid, JSON.stringify(path_to_send));
+  } else if (activeTool == 'line') {
+    path = new Path.Line(path_to_send.start, event.point);
+    path.fillColor = active_color_rgb;
+    path.name = path_to_send.name;
+    path.closed = true;
+    // add end point to path_to_send before sending to server
+    path_to_send.end = event.point;
+    // Send draw:end event to the Server with the end point
+    socket.emit('draw:end', room, uid, JSON.stringify(path_to_send));
   }
 
   textboxClosed = false;
@@ -1252,6 +1284,45 @@ $('#drawTool').on('click', function() {
   }); // set the selecttool css to show it as active
   activeTool = "draw";
   tool.minDistance = 10;
+  $('#myCanvas').css('cursor', 'pointer');
+  paper.project.activeLayer.selected = false;
+});
+$('#rectangleTool').on('click', function(){
+  $('#editbar > ul > li > a').css({
+    background: ''
+  }); // remove the backgrounds from other buttons
+  
+  $('#rectangleTool > a').css({
+    background: '#eee'
+  }); // set the selecttool css to show it as active
+  
+  activeTool = 'rectangle';
+  $('#myCanvas').css('cursor', 'pointer');
+  paper.project.activeLayer.selected = false;
+});
+$('#circleTool').on('click', function() {
+  $('#editbar > ul > li > a').css({
+    background: ''
+  }); // remove the backgrounds from other buttons
+  
+  $('#circleTool > a').css({
+    background: '#eee'
+  }); // set the selecttool css to show it as active
+  
+  activeTool = 'circle';
+  $('#myCanvas').css('cursor', 'pointer');
+  paper.project.activeLayer.selected = false;
+});
+$('#lineTool').on('click', function(){
+  $('#editbar > ul > li > a').css({
+    background: ''
+  }); // remove the backgrounds from other buttons
+  
+  $('#lineTool > a').css({
+    background: '#eee'
+  }); // set the selecttool css to show it as active
+  
+  activeTool = 'line';
   $('#myCanvas').css('cursor', 'pointer');
   paper.project.activeLayer.selected = false;
 });
@@ -1544,10 +1615,34 @@ var end_external_path = function(points, artist) {
     path.smooth();
     moveBelowTextboxes(path);
 
-    // Remove the old data
-    external_paths[artist] = false;
-
+  } else if (points.tool == "rectangle" || points.tool == "circle") {
+    // Use start and end point to create a new shape
+    var start_point = new Point(points.start[1], points.start[2]);
+    var end_point = new Point(points.end[1], points.end[2]);
+    var color = new RgbColor(points.rgba.red, points.rgba.green, points.rgba.blue, points.rgba.opacity);
+    external_paths[artist] = new Path.Rectangle(start_point, end_point);
+    path = external_paths[artist];
+    path.fillColor = color;
+    path.name = points.name;
+    path.closed = true;
+    
+    if ( points.tool == 'circle') {
+      path.smooth();
+    }
+  } else if (points.tool == "line") {
+    // Use start and end point to create a new shape
+    var start_point = new Point(points.start[1], points.start[2]);
+    var end_point = new Point(points.end[1], points.end[2]);
+    var color = new RgbColor(points.rgba.red, points.rgba.green, points.rgba.blue, points.rgba.opacity);
+    external_paths[artist] = new Path.Line(start_point, end_point);
+    path = external_paths[artist];
+    path.fillColor = color;
+    path.name = points.name;
+    path.closed = true;
   }
+
+  // Remove the old data
+  external_paths[artist] = false;
 
 };
 

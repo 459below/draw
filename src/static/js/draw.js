@@ -1080,17 +1080,15 @@ function onKeyDown(event) {
         } else if (event.key == "4") {
           document.getElementById('eraserTool').click();
         } else if (event.key == "5") {
-          document.getElementById('panTool').click();
+          document.getElementById('rectangleTool').click();
         } else if (event.key == "6") {
-          document.getElementById('textTool').click();
+          document.getElementById('circleTool').click();
         } else if (event.key == "7") {
-          document.getElementById('colorToggle').click();
+          document.getElementById('panTool').click();
         } else if (event.key == "8") {
-          document.getElementById('zeroTool').click();
+          document.getElementById('textTool').click();
         } else if (event.key == "9") {
-          document.getElementById('scaleTool').click();
-        } else if (event.key == "0") {
-          document.getElementById('fitTool').click();
+          document.getElementById('colorToggle').click();
         } else if (event.key == "delete" || event.key == "r") {
           // Delete selected items
           var items = paper.project.selectedItems;

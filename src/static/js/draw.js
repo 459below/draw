@@ -781,6 +781,13 @@ function onMouseDown(event) {
       paper.project.activeLayer.selected = false;
       selection_rectangle_startpoint = event.point;
     }
+  } else if (activeTool == "eraser") {
+    // Select item
+    $("#myCanvas").css("cursor", "pointer");
+    if ( ! event.item) {
+      paper.project.activeLayer.selected = false;
+      selection_rectangle_startpoint = event.point;
+    }
   } else if (activeTool == "rectangle" || activeTool == "circle" || activeTool == "line") {
     // The data to be sent to server in JSON
     // Is used by the other Clients to draw(display) the path
@@ -992,7 +999,7 @@ function onMouseUp(event) {
         drawEditTextbox(point);
       }
     }
-  } else if (activeTool == "select") {
+  } else if (activeTool == "select" || activeTool == "eraser") {
     if(typeof paper.project.selectedItems[0] != "undefined") {
       // End movement timer
       clearInterval(send_item_move_timer);
@@ -1021,6 +1028,13 @@ function onMouseUp(event) {
             group.children[i].selected = true;
             selection_rectangle_startpoint=undefined;
           }
+        }
+      }
+      if (activeTool == "eraser") {
+        // Delete selected items
+        var items = paper.project.selectedItems;
+        if (items) {
+          deleteItems(items);
         }
       }
     }
@@ -1064,19 +1078,19 @@ function onKeyDown(event) {
         } else if (event.key == "3") {
           document.getElementById('selectTool').click();
         } else if (event.key == "4") {
-          document.getElementById('panTool').click();
+          document.getElementById('eraserTool').click();
         } else if (event.key == "5") {
-          document.getElementById('textTool').click();
+          document.getElementById('panTool').click();
         } else if (event.key == "6") {
-          document.getElementById('colorToggle').click();
+          document.getElementById('textTool').click();
         } else if (event.key == "7") {
-          document.getElementById('zeroTool').click();
+          document.getElementById('colorToggle').click();
         } else if (event.key == "8") {
-          document.getElementById('scaleTool').click();
+          document.getElementById('zeroTool').click();
         } else if (event.key == "9") {
-          document.getElementById('fitTool').click();
+          document.getElementById('scaleTool').click();
         } else if (event.key == "0") {
-          document.getElementById('uploadImage').click();
+          document.getElementById('fitTool').click();
         } else if (event.key == "delete" || event.key == "r") {
           // Delete selected items
           var items = paper.project.selectedItems;
@@ -1334,6 +1348,16 @@ $('#selectTool').on('click', function() {
     background: "#eee"
   }); // set the selecttool css to show it as active
   activeTool = "select";
+  $('#myCanvas').css('cursor', 'crosshair');
+});
+$('#eraserTool').on('click', function() {
+  $('#editbar > ul > li > a').css({
+    background: ""
+  }); // remove the backgrounds from other buttons
+  $('#eraserTool > a').css({
+    background: "#eee"
+  }); // set the selecttool css to show it as active
+  activeTool = "eraser";
   $('#myCanvas').css('cursor', 'crosshair');
 });
 $('#panTool').on('click', function() {

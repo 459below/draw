@@ -774,14 +774,7 @@ function onMouseDown(event) {
       path: [],
       tool: activeTool
     };
-  } else if (activeTool == "select") {
-    // Select item
-    $("#myCanvas").css("cursor", "pointer");
-    if ( ! event.item) {
-      paper.project.activeLayer.selected = false;
-      selection_rectangle_startpoint = event.point;
-    }
-  } else if (activeTool == "eraser") {
+  } else if (activeTool == "select" || activeTool == "eraser") {
     // Select item
     $("#myCanvas").css("cursor", "pointer");
     if ( ! event.item) {
@@ -791,6 +784,7 @@ function onMouseDown(event) {
   } else if (activeTool == "rectangle" || activeTool == "circle" || activeTool == "line") {
     // The data to be sent to server in JSON
     // Is used by the other Clients to draw(display) the path
+    selection_rectangle_startpoint = event.point;
     path_to_send = {
       name: uid + ":" + (++paper_object_count),
       rgba: active_color_json,
@@ -805,6 +799,7 @@ var item_move_delta;
 var send_item_move_timer;
 var item_move_timer_is_active = false;
 var selection_rectangle_startpoint;
+var selection_rectangle_path;
 
 function onMouseDrag(event) {
   event.preventDefault();
@@ -868,6 +863,19 @@ function onMouseDrag(event) {
     overItem = event.item;
   } else {
     overItem = false;
+  }
+
+  if (activeTool == "select" || activeTool == "eraser" || activeTool == "rectangle" || activeTool == "circle" || activeTool == "line") {
+    // Draw selection rectangle
+    if(selection_rectangle_path) {
+      selection_rectangle_path.remove();
+    }
+    if (activeTool == "select" || activeTool == "eraser" || activeTool == "rectangle" || activeTool == "circle") {
+      selection_rectangle_path = new Path.Rectangle(selection_rectangle_startpoint, event.point);
+    } else if (activeTool == "line") {
+      selection_rectangle_path = new Path.Line(selection_rectangle_startpoint, event.point);
+    }
+    selection_rectangle_path.strokeColor = 'red';
   }
 
   if ((activeTool == "draw" || activeTool == "pencil") && path) {
@@ -948,6 +956,10 @@ function onMouseDrag(event) {
 
 
 function onMouseUp(event) {
+  // Removing selection rectangle
+  if(selection_rectangle_path) {
+    selection_rectangle_path.remove();
+  }
   // Ignore right mouse button clicks for now
   if (event.event.button == 2) {
     return;

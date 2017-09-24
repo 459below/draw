@@ -1065,7 +1065,7 @@ function onMouseUp(event) {
     socket.emit('draw:end', room, uid, JSON.stringify(path_to_send));
   } else if (activeTool == 'line') {
     path = new Path.Line(path_to_send.start, event.point);
-    path.fillColor = active_color_rgb;
+    path.strokeColor = active_color_rgb;
     path.name = path_to_send.name;
     path.closed = true;
     // add end point to path_to_send before sending to server
@@ -1670,7 +1670,7 @@ var end_external_path = function(points, artist) {
     var color = new RgbColor(points.rgba.red, points.rgba.green, points.rgba.blue, points.rgba.opacity);
     external_paths[artist] = new Path.Line(start_point, end_point);
     path = external_paths[artist];
-    path.fillColor = color;
+    path.strokeColor = color;
     path.name = points.name;
     path.closed = true;
   }
